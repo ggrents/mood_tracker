@@ -19,14 +19,14 @@ from django.urls import path, include
 
 from myapp.views import *
 from rest_framework import routers
-
-
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/cats/', ShowAddCategoryAPIView.as_view()),
-    path('api/tasks/add', AddTasksAPIView.as_view()),
-    path('api/user/tasks/show/', ShowTasksAPIView.as_view()),
-    path('api/cats/<int:px>', ChosenCategoryAPIView.as_view()),
+    path('api/users/register/', RegisterAPIView.as_view(), name = 'register') ,
+    path('api/users/logout/', LogoutAPIView.as_view(), name = 'logout') ,
+    path('api/users/login/', LoginAPIView.as_view(), name = 'login'),
+    path('api/users/cats/show_add/', CategoryAddShowAPIView.as_view()),
+    #path('api/users/', include('rest_framework.urls')) ,
 
 ]
