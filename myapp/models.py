@@ -4,7 +4,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=300)
-    user = models.ForeignKey(User, related_name='categories', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='categories',default=1, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Категория"
@@ -20,7 +20,7 @@ class Task(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     deadline = models.DateTimeField()
     category = models.ForeignKey(to=Category, related_name='category', on_delete=models.CASCADE)
-    user = models.ForeignKey(to=User, related_name='tasks', on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, related_name='tasks', on_delete=models.CASCADE, default=1)
 
     class Meta:
         verbose_name = "Задача"
