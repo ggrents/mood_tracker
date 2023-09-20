@@ -31,5 +31,8 @@ urlpatterns = [
     path('api/cats/show/', CategoryShowAPIView.as_view()),
     path('api/cats/choose/<int:pk>', CategoryChooseAPIView.as_view()),
 
+    path('api/tasks/add', TaskAddAPIView.as_view()),
+    path('api/tasks/show', TaskShowAPIView.as_view()),
+
 #
 ]

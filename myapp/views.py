@@ -19,18 +19,43 @@ class CategoryAddAPIView(CreateAPIView):
 
     def perform_create(self, serializer):
         user = self.request.user
-        serializer.save(user = user)
+        serializer.save(user=user)
+
 
 class CategoryShowAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        return Category.objects.filter(user = self.request.user)
+        return Category.objects.filter(user=self.request.user)
 
-class CategoryChooseAPIView(RetrieveUpdateDestroyAPIView) :
+
+class CategoryChooseAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsCategoryOwner]
     serializer_class = CategorySerializer
 
     def get_queryset(self):
-        return Category.objects.filter(user = self.request.user)
+        return Category.objects.filter(user=self.request.user)
+
+
+class TaskAddAPIView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TaskSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        category_id = self.request.data.get('category')
+        try :
+            category = Category.objects.get(id=category_id, user = user)
+
+        except :
+            raise serializers.ValidationError("Выбрана неверная категория!")
+        serializer.save(user=user, category=category)
+
+
+class TaskShowAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
