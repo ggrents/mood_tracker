@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Task
-from .permissions import IsCategoryOwner
+from .permissions import *
 from .serializers import *
 
 
@@ -26,12 +26,13 @@ class CategoryShowAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CategorySerializer
 
+
     def get_queryset(self):
         return Category.objects.filter(user=self.request.user)
 
 
 class CategoryChooseAPIView(RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated, IsCategoryOwner]
+    permission_classes = [IsAuthenticated, IsOwner]
     serializer_class = CategorySerializer
 
     def get_queryset(self):
@@ -41,6 +42,16 @@ class CategoryChooseAPIView(RetrieveUpdateDestroyAPIView):
 class TaskAddAPIView(CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TaskSerializer
+    def get_queryset(self):
+        return Category.objects.filter(user = self.request.user)
+    def get(self, request):
+        user = self.request.user
+
+        category = Category.objects.filter(user=user)
+        serializer = CategorySerializer(category, many=True)
+
+        return Response(serializer.data)
+
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -59,3 +70,10 @@ class TaskShowAPIView(ListAPIView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
+class TaskChooseAPIView(RetrieveUpdateDestroyAPIView) :
+    permission_classes = [IsAuthenticated, IsOwner]
+    serializer_class = TaskSerializer
+
+    def get_queryset(self):
+        return Task.objects.filter(user = self.request.user)
