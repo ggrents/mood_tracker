@@ -5,6 +5,7 @@ from rest_framework import generics, viewsets, mixins, status, filters
 from rest_framework.generics import ListCreateAPIView, ListAPIView, CreateAPIView, UpdateAPIView, \
     RetrieveUpdateDestroyAPIView, DestroyAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import *
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django_filters.rest_framework import DjangoFilterBackend
@@ -76,6 +77,7 @@ class TaskShowAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = TaskSerializer
 
+    renderer_classes = [JSONRenderer]
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['name', 'deadline']
     search_fields = ['name', 'is_done']

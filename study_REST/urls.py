@@ -12,12 +12,12 @@ urlpatterns = [
     path('api/auth/', include('djoser.urls')),
     re_path('auth/', include('djoser.urls.authtoken')),
 
-    path('api/cats/add/', CategoryAddAPIView.as_view()),
-    path('api/cats/show/', CategoryShowAPIView.as_view()),
-    path('api/cats/choose/<int:pk>/', CategoryChooseAPIView.as_view()),
+    path('api/cats/add/', CategoryAddAPIView.as_view(), name='category-create'),
+    path('api/cats/show/', CategoryShowAPIView.as_view(), name='category-list'),
+    path('api/cats/choose/<int:pk>/', CategoryChooseAPIView.as_view(), name='category-detail'),
 
-    path('api/tasks/add/', TaskAddAPIView.as_view()),
-    path('api/tasks/show/', TaskShowAPIView.as_view()),
-    path('api/tasks/choose/<int:pk>', TaskChooseAPIView.as_view())
+    path('api/tasks/add/', TaskAddAPIView.as_view(), name='task-create'),
+    path('api/tasks/show/', TaskShowAPIView.as_view(), name='task-list'),
+    path('api/tasks/choose/<int:pk>', TaskChooseAPIView.as_view(), name = 'task-detail')
 
 ]
