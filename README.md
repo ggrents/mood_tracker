@@ -1,2 +1,2 @@
 # TASK MANAGER
-Telegram bot for efficient managing tasks, developed using the python-telegram-bot library and integrated with our API based on Django REST framework.
+Telegram bot for efficient managing tasks, developed using a GUI and integrated with RESTful API based on Django REST framework.
